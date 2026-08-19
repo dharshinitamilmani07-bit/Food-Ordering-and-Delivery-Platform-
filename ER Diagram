@@ -1,0 +1,78 @@
+                         ┌──────────────────────┐
+                         │      RESTAURANT      │
+                         ├──────────────────────┤
+                         │ PK restaurant_id     │
+                         │    name              │
+                         │    location          │
+                         │    phone             │
+                         │    rating             │
+                         └──────────┬───────────┘
+                                    │
+                                  offers
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │         FOOD         │
+                         ├──────────────────────┤
+                         │ PK food_id            │
+                         │ FK restaurant_id     │
+                         │    food_name         │
+                         │    category          │
+                         │    price             │
+                         │    availability      │
+                         └──────────┬───────────┘
+                                    │
+                                 selected
+                                    │
+                                    ▼
+┌──────────────────┐       ┌──────────────────────┐
+│       USER       │       │     ORDER_ITEM       │
+├──────────────────┤       ├──────────────────────┤
+│ PK user_id       │──────►│ PK item_id           │
+│    name          │       │ FK order_id          │
+│    email         │       │ FK food_id           │
+│    password      │       │    quantity          │
+│    phone         │       │    price             │
+│    address       │       └──────────┬───────────┘
+└────────┬─────────┘                  │
+         │                            │ belongs to
+       places                         ▼
+         │                  ┌──────────────────────┐
+         └─────────────────►│        ORDER        │
+                            ├──────────────────────┤
+                            │ PK order_id          │
+                            │ FK user_id           │
+                            │    order_date        │
+                            │    total_amount      │
+                            │    order_status      │
+                            └───────┬───────┬──────┘
+                                    │       │
+                                  paid    delivered
+                                    │       │
+                       ┌────────────┘       └────────────┐
+                       ▼                                 ▼
+              ┌──────────────────┐              ┌──────────────────┐
+              │     PAYMENT      │              │     DELIVERY     │
+              ├──────────────────┤              ├──────────────────┤
+              │ PK payment_id    │              │ PK delivery_id   │
+              │ FK order_id      │              │ FK order_id     │
+              │ payment_method   │              │ delivery_person │
+              │ amount           │              │ delivery_address│
+              │ payment_status   │              │ delivery_status │
+              └──────────────────┘              └──────────────────┘
+
+
+                 ┌──────────────────────┐
+                 │        REVIEW        │
+                 ├──────────────────────┤
+                 │ PK review_id         │
+                 │ FK user_id           │
+                 │ FK restaurant_id     │
+                 │    rating            │
+                 │    comment           │
+                 └──────────────────────┘
+                          ▲        ▲
+                          │        │
+                        writes   receives
+                          │        │
+                         USER   RESTAURANT
