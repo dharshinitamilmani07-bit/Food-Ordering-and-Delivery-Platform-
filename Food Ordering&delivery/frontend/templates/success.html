@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed - FoodieGo{% endblock %}
+
+{% block content %}
+
+<div class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>
+            Thank you for ordering with FoodieGo.
+        </p>
+
+        <div class="order-number">
+            Order #{{ order['id'] }}
+        </div>
+
+        <p>
+            Payment:
+            <strong>{{ order['payment_method'] }}</strong>
+        </p>
+
+        <p>
+            Status:
+            <strong>{{ order['status'] }}</strong>
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('orders') }}"
+               class="btn primary">
+                My Orders
+            </a>
+
+            <a href="{{ url_for('home') }}"
+               class="btn secondary">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

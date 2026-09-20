@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<div class="pageHeader">
+
+<h1>Checkout</h1>
+
+<p>
+Complete your order.
+</p>
+
+</div>
+
+
+<div class="checkoutLayout">
+
+
+<form
+method="POST"
+class="checkoutForm">
+
+
+<h2>Delivery Address</h2>
+
+<textarea
+name="address"
+required
+placeholder="House No, Street, Area, City, Pincode"></textarea>
+
+
+<h2>Payment Method</h2>
+
+
+<label class="paymentOption">
+
+<input
+type="radio"
+name="payment"
+value="UPI"
+checked>
+
+<div>
+
+<strong>UPI</strong>
+
+<p>Google Pay / PhonePe / Paytm</p>
+
+</div>
+
+</label>
+
+
+<label class="paymentOption">
+
+<input
+type="radio"
+name="payment"
+value="Card">
+
+<div>
+
+<strong>Credit / Debit Card</strong>
+
+<p>Secure card payment</p>
+
+</div>
+
+</label>
+
+
+<label class="paymentOption">
+
+<input
+type="radio"
+name="payment"
+value="Cash on Delivery">
+
+<div>
+
+<strong>Cash on Delivery</strong>
+
+<p>Pay when your order arrives</p>
+
+</div>
+
+</label>
+
+
+<button
+class="btn primary full">
+
+Place Order
+₹{{ "%.0f"|format(total) }}
+
+</button>
+
+</form>
+
+
+<div class="bill">
+
+<h2>Order Summary</h2>
+
+{% for item in items %}
+
+<div>
+
+<span>
+{{ item.food.name }} × {{ item.quantity }}
+</span>
+
+<strong>
+₹{{ "%.0f"|format(item.total) }}
+</strong>
+
+</div>
+
+{% endfor %}
+
+<hr>
+
+<div>
+
+<span>Delivery</span>
+
+<strong>
+₹{{ "%.0f"|format(delivery) }}
+</strong>
+
+</div>
+
+<div>
+
+<span>Tax</span>
+
+<strong>
+₹{{ "%.0f"|format(tax) }}
+</strong>
+
+</div>
+
+<div class="total">
+
+<span>Total</span>
+
+<strong>
+₹{{ "%.0f"|format(total) }}
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

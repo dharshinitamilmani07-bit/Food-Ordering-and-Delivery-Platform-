@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders - FoodieGo{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="small-title">ORDER HISTORY</p>
+
+    <h1>My Orders</h1>
+
+</section>
+
+
+<section class="section">
+
+    {% if orders %}
+
+    <div class="orders-list">
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <div>
+
+                <span class="order-id">
+                    Order #{{ order['id'] }}
+                </span>
+
+                <h2>
+                    ₹{{ "%.0f"|format(order['total']) }}
+                </h2>
+
+                <p>
+                    {{ order['created_at'] }}
+                </p>
+
+                <p>
+                    💳 {{ order['payment_method'] }}
+                </p>
+
+            </div>
+
+
+            <div class="order-status">
+
+                <span class="status">
+                    {{ order['status'] }}
+                </span>
+
+                <a href="{{ url_for(
+                    'delivery',
+                    order_id=order['id']
+                ) }}"
+                   class="btn primary">
+                    Track Order
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-box">
+
+        <div class="empty-icon">📦</div>
+
+        <h2>No orders yet</h2>
+
+        <p>
+            Your order history will appear here.
+        </p>
+
+        <a href="{{ url_for('foods') }}"
+           class="btn primary">
+            Order Now
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

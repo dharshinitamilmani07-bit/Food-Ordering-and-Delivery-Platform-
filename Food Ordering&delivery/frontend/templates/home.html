@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}FoodieGo - Home{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            FAST • FRESH • DELICIOUS
+        </p>
+
+        <h1>
+            Delicious food,
+            <span>delivered fast.</span>
+        </h1>
+
+        <p>
+            Discover your favourite restaurants and order
+            delicious meals from the comfort of your home.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{{ url_for('restaurants') }}"
+               class="btn primary">
+                Explore Restaurants
+            </a>
+
+            <a href="{{ url_for('foods') }}"
+               class="btn secondary">
+                Browse Food
+            </a>
+        </div>
+
+    </div>
+
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+             alt="Food">
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-heading">
+        <div>
+            <p class="small-title">EXPLORE</p>
+            <h2>Popular Food</h2>
+        </div>
+
+        <a href="{{ url_for('foods') }}" class="view-link">
+            View All →
+        </a>
+    </div>
+
+
+    <div class="food-grid">
+
+        {% for food in foods %}
+
+        <div class="food-card">
+
+            <div class="food-image">
+                <img src="{{ food['image'] }}"
+                     alt="{{ food['name'] }}"
+                     onerror="this.style.display='none'">
+            </div>
+
+            <div class="food-info">
+
+                <span class="category">
+                    {{ food['category'] }}
+                </span>
+
+                <h3>{{ food['name'] }}</h3>
+
+                <p class="restaurant-name">
+                    {{ food['restaurant_name'] }}
+                </p>
+
+                <div class="food-bottom">
+
+                    <strong>
+                        ₹{{ "%.0f"|format(food['price']) }}
+                    </strong>
+
+                    <a href="{{ url_for('add_cart', food_id=food['id']) }}"
+                       class="add-btn">
+                        + Add
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <div class="feature">
+        <div class="feature-icon">🚀</div>
+        <h3>Fast Delivery</h3>
+        <p>Get your food delivered quickly.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🍽️</div>
+        <h3>Quality Food</h3>
+        <p>Fresh and delicious meals.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">💳</div>
+        <h3>Easy Payment</h3>
+        <p>Multiple payment options.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">⭐</div>
+        <h3>Reviews</h3>
+        <p>Share your food experience.</p>
+    </div>
+
+</section>
+
+{% endblock %}

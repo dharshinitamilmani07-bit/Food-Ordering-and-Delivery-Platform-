@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}
+Track Order
+{% endblock %}
+
+{% block content %}
+
+<div class="trackingPage">
+
+<div class="trackingHeader">
+
+<div>
+
+<p>
+Order #{{ order.id }}
+</p>
+
+<h1>
+{{ order.status }}
+</h1>
+
+<p>
+Your food is on its way.
+</p>
+
+</div>
+
+<div class="deliveryBike">
+🚴
+</div>
+
+</div>
+
+
+<div class="trackingSteps">
+
+{% set statuses = [
+"Order Placed",
+"Preparing Food",
+"Out for Delivery",
+"Delivered"
+] %}
+
+
+{% for status in statuses %}
+
+<div class="trackingStep">
+
+<div class="stepCircle">
+
+{% if statuses.index(status)
+<= statuses.index(order.status) %}
+
+✓
+
+{% endif %}
+
+</div>
+
+<strong>
+{{ status }}
+</strong>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+<div class="deliveryDetails">
+
+<h2>
+Delivery Details
+</h2>
+
+<h3>
+Address
+</h3>
+
+<p>
+{{ order.address }}
+</p>
+
+
+<h3>
+Payment
+</h3>
+
+<p>
+{{ order.payment }}
+</p>
+
+
+<h3>
+Total Amount
+</h3>
+
+<p>
+₹{{ "%.0f"|format(order.total) }}
+</p>
+
+</div>
+
+</div>
+
+{% endblock %}

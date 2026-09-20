@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - FoodieGo{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="small-title">CHECKOUT</p>
+
+    <h1>Complete Your Order</h1>
+
+</section>
+
+
+<section class="checkout">
+
+    <div class="checkout-form">
+
+        <h2>Delivery Address</h2>
+
+        <form method="POST">
+
+            <label>Full Address</label>
+
+            <textarea name="address"
+                      rows="5"
+                      placeholder="Enter your complete delivery address"
+                      required></textarea>
+
+
+            <h2>Payment Method</h2>
+
+            <div class="payment-options">
+
+                {% for method in methods %}
+
+                <label class="payment-option">
+
+                    <input type="radio"
+                           name="payment_method"
+                           value="{{ method }}"
+                           required>
+
+                    <span>
+                        {% if method == "Cash on Delivery" %}
+                            💵
+                        {% elif method == "UPI" %}
+                            📱
+                        {% else %}
+                            💳
+                        {% endif %}
+
+                        {{ method }}
+                    </span>
+
+                </label>
+
+                {% endfor %}
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn primary full">
+                Place Order
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="checkout-summary">
+
+        <h2>Your Order</h2>
+
+        {% for item in items %}
+
+        <div class="checkout-item">
+
+            <span>
+                {{ item['food']['name'] }}
+                × {{ item['quantity'] }}
+            </span>
+
+            <strong>
+                ₹{{ "%.0f"|format(item['subtotal']) }}
+            </strong>
+
+        </div>
+
+        {% endfor %}
+
+        <hr>
+
+        <div class="summary-total">
+
+            <span>Total</span>
+
+            <strong>
+                ₹{{ "%.0f"|format(total) }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

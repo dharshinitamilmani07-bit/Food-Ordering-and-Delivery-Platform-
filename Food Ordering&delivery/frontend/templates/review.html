@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Review Food - FoodieGo{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="small-title">YOUR FEEDBACK</p>
+
+    <h1>Review {{ food['name'] }}</h1>
+
+</section>
+
+
+<div class="review-container">
+
+    <div class="review-form">
+
+        <h2>Write a Review</h2>
+
+        <form method="POST">
+
+            <label>Rating</label>
+
+            <select name="rating" required>
+
+                <option value="">Select Rating</option>
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="2">⭐⭐ Poor</option>
+                <option value="1">⭐ Bad</option>
+
+            </select>
+
+
+            <label>Your Review</label>
+
+            <textarea name="comment"
+                      rows="5"
+                      placeholder="Tell us about the food..."
+                      required></textarea>
+
+
+            <button class="btn primary full">
+                Submit Review
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="reviews">
+
+        <h2>Customer Reviews</h2>
+
+        {% for review in reviews %}
+
+        <div class="review-card">
+
+            <h3>{{ review['name'] }}</h3>
+
+            <div>
+                {{ "⭐" * review['rating'] }}
+            </div>
+
+            <p>
+                {{ review['comment'] }}
+            </p>
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No reviews yet.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

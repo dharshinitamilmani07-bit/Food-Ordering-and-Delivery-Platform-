@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Cart - FoodieGo{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="small-title">YOUR CART</p>
+
+    <h1>Shopping Cart</h1>
+
+</section>
+
+
+<section class="cart-section">
+
+    {% if items %}
+
+    <div class="cart-list">
+
+        {% for item in items %}
+
+        <div class="cart-item">
+
+            <img src="{{ item['food']['image'] }}"
+                 alt="{{ item['food']['name'] }}">
+
+
+            <div class="cart-details">
+
+                <h2>
+                    {{ item['food']['name'] }}
+                </h2>
+
+                <p>
+                    {{ item['food']['category'] }}
+                </p>
+
+                <strong>
+                    ₹{{ "%.0f"|format(item['food']['price']) }}
+                </strong>
+
+            </div>
+
+
+            <form method="POST"
+                  action="{{ url_for(
+                      'update_cart_item',
+                      food_id=item['food']['id']
+                  ) }}"
+                  class="quantity-form">
+
+                <input type="number"
+                       name="quantity"
+                       min="0"
+                       value="{{ item['quantity'] }}">
+
+                <button type="submit">
+                    Update
+                </button>
+
+            </form>
+
+
+            <div class="subtotal">
+
+                <strong>
+                    ₹{{ "%.0f"|format(item['subtotal']) }}
+                </strong>
+
+                <a href="{{ url_for(
+                    'remove_cart_item',
+                    food_id=item['food']['id']
+                ) }}">
+                    Remove
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="cart-summary">
+
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>₹{{ "%.0f"|format(total) }}</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Delivery Fee</span>
+            <strong>₹40</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Taxes</span>
+            <strong>₹{{ "%.0f"|format(total * 0.05) }}</strong>
+        </div>
+
+        <hr>
+
+        <div class="summary-total">
+            <span>Total</span>
+            <strong>
+                ₹{{ "%.0f"|format(total + 40 + total * 0.05) }}
+            </strong>
+        </div>
+
+        <a href="{{ url_for('payment') }}"
+           class="btn primary full">
+            Proceed to Checkout
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-box">
+
+        <div class="empty-icon">
+            🛒
+        </div>
+
+        <h2>Your cart is empty</h2>
+
+        <p>
+            Add some delicious food to your cart.
+        </p>
+
+        <a href="{{ url_for('foods') }}"
+           class="btn primary">
+            Browse Food
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
